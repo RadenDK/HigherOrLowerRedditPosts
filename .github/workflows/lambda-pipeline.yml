@@ -3,7 +3,8 @@ name: Deploy Python Script to AWS Lambda
 on:
   push:
     paths:
-      - python-scripts
+      - 'python-scripts/**'
+
 
 jobs:
   build-and-deploy:
