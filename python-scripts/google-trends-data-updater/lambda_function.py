@@ -1,4 +1,4 @@
 
 def lambda_handler(event, context):
-    print("Is it working")
+    print("It seems to not work")
     return None
