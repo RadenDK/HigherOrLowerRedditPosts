@@ -153,5 +153,6 @@ dmypy.json
 cython_debug/
 
 python-scripts/.idea
-python-scripts/google-trends-data-updater/.idea
+python-scripts/reddit-posts-updater/.idea
 
+python-scripts/reddit-posts-updater/local_execution.py
