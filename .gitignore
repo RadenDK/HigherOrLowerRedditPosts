@@ -155,4 +155,6 @@ cython_debug/
 python-scripts/.idea
 python-scripts/reddit-posts-updater/.idea
 
-python-scripts/reddit-posts-updater/local_execution.py
+python-scripts/reddit-posts-updater/lambda_build/
+
+
