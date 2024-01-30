@@ -6,6 +6,9 @@ import praw
 
 
 def lambda_handler(event, context):
+
+    print("CI/CD pipeline worked at least")
+
     reddit_accessor = RedditAccessor()
 
     reddit_posts = reddit_accessor.retrieve_todays_reddit_posts()
