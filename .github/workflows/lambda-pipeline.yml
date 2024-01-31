@@ -49,7 +49,7 @@ jobs:
     - name: Create Zip Archive
       run: |
         cd python-scripts/reddit-posts-updater/package
-        zip -r ../../deploy_package.zip .
+        zip -r ../../../deploy_package.zip .
       shell: bash
 
     # Deploy to Lambda using AWS CLI
