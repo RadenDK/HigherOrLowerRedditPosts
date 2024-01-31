@@ -24,6 +24,7 @@ jobs:
       run: |
         cd python-scripts/reddit-posts-updater/
         python package_builder.py
+        echo "ZIP file created at: ${{ steps.step-id.outputs.zip-file-path }}"
       shell: bash
 
     # Deploy to Lambda
