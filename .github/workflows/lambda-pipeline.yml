@@ -40,16 +40,10 @@ jobs:
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
       run: |
-        aws lambda create-function \
+        aws lambda update-function-code \
           --function-name redditPostsUpdater \
-          --zip-file fileb://python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip \
-          --handler lambda_function.lambda_handler \
-          --role arn:aws:iam::680867918547:role/service-role/redditPostsUpdater-role-1kdpewc3 \
-          --runtime python3.12 \
-          --memory-size 128 \
-          --timeout 30
+          --zip-file fileb://python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
       shell: bash
-
     
       
 
