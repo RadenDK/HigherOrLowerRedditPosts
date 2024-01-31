@@ -50,7 +50,11 @@ jobs:
       shell: bash
 
     - name: Print contents of the generated ZIP file
-      run: unzip -l deploy_package.zip | awk '{print $4}' | grep -E '^[^/]+/$'
+      run: |
+        sudo apt-get install -y unzip  
+        unzip -l deploy_package.zip
+        ls
+
     
     
 
