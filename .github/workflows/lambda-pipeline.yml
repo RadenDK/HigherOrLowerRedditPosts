@@ -29,16 +29,27 @@ jobs:
       if: success()
       shell: bash
 
-    # Run the package_builder.py script
-    - name: Run package_builder.py
+    # Install dependencies into a target directory
+    - name: Install Dependencies
       run: |
         cd python-scripts/reddit-posts-updater/
-        python package_builder.py
+        mkdir -p lambda_build/package
+        pip install -r lambda_build/requirements.txt -t lambda_build/package
+
+    # Copy lambda_function.py into the target directory
+    - name: Copy Lambda Function
+      run: |
+        cp python-scripts/reddit-posts-updater/lambda_function.py python-scripts/reddit-posts-updater/lambda_build/package/
+
+    # Create a zip archive
+    - name: Create Zip Archive
+      run: |
+        cd python-scripts/reddit-posts-updater/lambda_build/
+        zip -r deploy_package.zip package/
       shell: bash
 
     - name: Print contents of the generated ZIP file
       run: unzip -l python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
-
 
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
@@ -47,6 +58,3 @@ jobs:
           --function-name redditPostsUpdater \
           --zip-file fileb://python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
       shell: bash
-    
-      
-
