@@ -52,7 +52,10 @@ jobs:
     - name: Unzip file for debugging
       run: |
         sudo apt-get install -y unzip  
-        unzip -d your_destination_folder deploy_package.zip
+        unzip deploy_package.zip -d your_destination_folder
+        cd your_destination_folder
+        ls
+    
     - name: Print contents of the generated ZIP file
       run: |
         cd your_destination_folder
