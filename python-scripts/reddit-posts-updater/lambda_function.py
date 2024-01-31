@@ -4,7 +4,6 @@ from decimal import Decimal
 import boto3
 import praw
 
-
 def lambda_handler(event, context):
     reddit_accessor = RedditAccessor()
 
