@@ -34,12 +34,6 @@ def copy_source_file(source_file, target_directory):
 
 
 def create_zip_archive(target_directory, zip_file_name):
-    # Create absolute path for the ZIP file
-    zip_file_path = os.path.abspath(zip_file_name)
-
-    # Print the absolute path before creating the ZIP file
-    print(f"Creating ZIP file at: {zip_file_path}")
-
     shutil.make_archive(base_name=zip_file_name, format='zip', root_dir=target_directory)
 
 
