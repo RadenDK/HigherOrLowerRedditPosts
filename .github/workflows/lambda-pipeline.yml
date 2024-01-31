@@ -24,14 +24,7 @@ jobs:
       run: |
         cd python-scripts/reddit-posts-updater/
         python package_builder.py
-        echo "ZIP file created at: ${{ steps.step-id.outputs.zip-file-path }}"
       shell: bash
-
-
-# Print the source path
-    - name: Print Source Path
-      run: | 
-        echo "Deploying Lambda function with source: ${{ github.workspace }}/python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip"
 
     # Deploy to Lambda
     - name: Deploy to Lambda
@@ -41,5 +34,5 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_LAMBDA_SECRET_ACCESS_KEY }}
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: redditPostsUpdater
-        source: ${{ github.workspace }}/python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
+        zip_file: python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
 
