@@ -36,6 +36,7 @@ jobs:
       run: |
         cd python-scripts/reddit-posts-updater/
         mkdir -p package
+        python -m pip install --upgrade pip
         pip install -r requirements.txt -t package
 
     # Copy lambda_function.py into the target directory
@@ -43,23 +44,21 @@ jobs:
       run: |
         cp python-scripts/reddit-posts-updater/lambda_function.py python-scripts/reddit-posts-updater/package/
 
+    - name: Open Package folder
+      run: |
+        cd python-scripts/reddit-posts-updater/package
+        ls
+
     # Create a zip archive
     - name: Create Zip Archive
       run: |
         zip -r deploy_package.zip python-scripts/reddit-posts-updater/package/
       shell: bash
 
-    - name: Unzip file for debugging
+    - name: Display Content of Zip Archive
       run: |
-        sudo apt-get install -y unzip  
-        unzip deploy_package.zip -d your_destination_folder
-        cd your_destination_folder
-        ls
-    
-    - name: Print contents of the generated ZIP file
-      run: |
-        cd your_destination_folder
-        ls
+        unzip -l python-scripts/reddit-posts-updater/deploy_package.zip
+      shell: bash
 
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
