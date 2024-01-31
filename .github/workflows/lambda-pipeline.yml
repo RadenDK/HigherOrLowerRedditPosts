@@ -39,12 +39,11 @@ jobs:
     # Copy lambda_function.py into the target directory
     - name: Copy Lambda Function
       run: |
-        cp python-scripts/reddit-posts-updater/lambda_function.py python-scripts/reddit-posts-updater/package/
+        cp lambda_function.py package/
 
     # Create a zip archive
     - name: Create Zip Archive
       run: |
-        cd python-scripts/reddit-posts-updater/
         zip -r deploy_package.zip package/
       shell: bash
 
