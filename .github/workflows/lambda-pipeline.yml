@@ -52,12 +52,12 @@ jobs:
     # Create a zip archive
     - name: Create Zip Archive
       run: |
-        zip -r deploy_package.zip python-scripts/reddit-posts-updater/package/
+        zip deploy_package.zip python-scripts/reddit-posts-updater/package
       shell: bash
 
     - name: Unzip Zip Archive
       run: |
-        unzip deploy_package.zip -d destination_folder
+        unzip deploy_package.zip destination_folder
       shell: bash
 
     - name: Display unzipped folder
