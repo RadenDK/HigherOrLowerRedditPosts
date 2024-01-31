@@ -42,7 +42,7 @@ def main():
     source_file = "lambda_function.py"
     requirements_file_name = "lambda_build/requirements.txt"
     package_directory = "lambda_build/package"
-    zip_file_name = "lambda_build/deploy_package.zip"
+    zip_file_name = "lambda_build/deploy_package"
 
     # Activate the virtual environment
     activate_virtual_environment()
