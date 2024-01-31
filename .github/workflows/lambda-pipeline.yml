@@ -41,3 +41,7 @@ jobs:
         role: arn:aws:iam::680867918547:role/service-role/redditPostsUpdater-role-1kdpewc3
         runtime: Python 3.12
 
+    - name: List ZIP file contents
+      run: ls -R ${{ github.workspace }}/python-scripts/reddit-posts-updater/lambda_build
+      
+
