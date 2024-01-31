@@ -57,7 +57,7 @@ jobs:
 
     - name: Display Content of Zip Archive
       run: |
-        unzip -l python-scripts/reddit-posts-updater/deploy_package.zip
+        unzip -l deploy_package.zip
       shell: bash
 
     # Deploy to Lambda using AWS CLI
