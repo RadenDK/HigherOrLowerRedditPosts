@@ -27,6 +27,12 @@ jobs:
         echo "ZIP file created at: ${{ steps.step-id.outputs.zip-file-path }}"
       shell: bash
 
+
+# Print the source path
+    - name: Print Source Path
+      run: | 
+        echo "Deploying Lambda function with source: ${{ github.workspace }}/python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip"
+
     # Deploy to Lambda
     - name: Deploy to Lambda
       uses: appleboy/lambda-action@v0.1.9
@@ -36,3 +42,4 @@ jobs:
         aws_region: ${{ secrets.AWS_REGION }}
         function_name: redditPostsUpdater
         source: ${{ github.workspace }}/python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
+
