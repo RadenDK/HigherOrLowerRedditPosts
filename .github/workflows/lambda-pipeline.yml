@@ -48,7 +48,8 @@ jobs:
       shell: bash
 
     - name: Print contents of the generated ZIP file
-      run: unzip -1 -l deploy_package.zip
+      run: unzip -l deploy_package.zip | sed '1,/-----/d'
+    
     
 
     # Deploy to Lambda using AWS CLI
