@@ -2,8 +2,10 @@ name: Deploy Python Script to AWS Lambda
 
 on:
   push:
-    paths:
-      - 'python-scripts/**'
+    branches:
+      - main
+    #paths:
+    #  - 'python-scripts/**'
 
 jobs:
   build-and-deploy:
@@ -48,7 +50,7 @@ jobs:
       shell: bash
 
     - name: Print contents of the generated ZIP file
-      run: unzip -l deploy_package.zip | sed '1,/-----/d'
+      run: unzip -l deploy_package.zip | awk '{print $4}' | grep -E '^[^/]+/$'
     
     
 
