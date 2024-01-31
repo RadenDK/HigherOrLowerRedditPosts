@@ -49,15 +49,14 @@ jobs:
         zip -r deploy_package.zip python-scripts/reddit-posts-updater/package/
       shell: bash
 
-    - name: Print contents of the generated ZIP file
+    - name: Unzip file for debugging
       run: |
         sudo apt-get install -y unzip  
         unzip -d your_destination_folder deploy_package.zip
+    - name: Print contents of the generated ZIP file
+      run: |
         cd your_destination_folder
         ls
-
-    
-    
 
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
