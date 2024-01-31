@@ -42,12 +42,8 @@ jobs:
     # Copy lambda_function.py into the target directory
     - name: Copy Lambda Function
       run: |
-        cp python-scripts/reddit-posts-updater/lambda_function.py python-scripts/reddit-posts-updater/package/
-
-    - name: Open Package folder
-      run: |
-        cd python-scripts/reddit-posts-updater/package
-        ls
+        cd python-scripts/reddit-posts-updater/
+        cp lambda_function.py package/
 
     # Create a zip archive
     - name: Create Zip Archive
@@ -55,16 +51,6 @@ jobs:
         cd python-scripts/reddit-posts-updater/package
         zip -r ../../deploy_package.zip .
       shell: bash
-
-    - name: Unzip Zip Archive
-      run: |
-        unzip deploy_package.zip -d deploy_package
-      shell: bash
-
-    - name: Display unzipped folder
-      run: |
-        cd deploy_package 
-        ls
 
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
