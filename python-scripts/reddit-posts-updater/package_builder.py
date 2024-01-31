@@ -34,14 +34,20 @@ def copy_source_file(source_file, target_directory):
 
 
 def create_zip_archive(target_directory, zip_file_name):
-    shutil.make_archive(zip_file_name, 'zip', target_directory)
+    # Create absolute path for the ZIP file
+    zip_file_path = os.path.abspath(zip_file_name)
+
+    # Print the absolute path before creating the ZIP file
+    print(f"Creating ZIP file at: {zip_file_path}")
+
+    shutil.make_archive(base_name=zip_file_name, format='zip', root_dir=target_directory)
 
 
 def main():
     # Path to the directory where you want to install the dependencies
     source_file = "lambda_function.py"
-    target_directory = "lambda_build/package"
     requirements_file_name = "lambda_build/requirements.txt"
+    package_directory = "lambda_build/package"
     zip_file_name = "lambda_build/deploy_package.zip"
 
     # Activate the virtual environment
@@ -54,13 +60,13 @@ def main():
     write_requirements_to_file(requirements_file_name, freeze_result)
 
     # Install requirements from requirements.txt to the target directory
-    install_requirements(target_directory, requirements_file_name)
+    install_requirements(package_directory, requirements_file_name)
 
     # Copy source file to the target directory
-    copy_source_file(source_file, target_directory)
+    copy_source_file(source_file, package_directory)
 
     # Create a zip archive
-    create_zip_archive(target_directory, zip_file_name)
+    create_zip_archive(package_directory, zip_file_name)
 
 
 if __name__ == "__main__":
