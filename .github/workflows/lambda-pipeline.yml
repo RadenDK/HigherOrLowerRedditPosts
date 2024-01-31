@@ -57,12 +57,12 @@ jobs:
 
     - name: Unzip Zip Archive
       run: |
-        unzip deploy_package.zip destination_folder
+        unzip deploy_package.zip
       shell: bash
 
     - name: Display unzipped folder
       run: |
-        cd destination_folder
+        cd deploy_package
         ls
 
     # Deploy to Lambda using AWS CLI
