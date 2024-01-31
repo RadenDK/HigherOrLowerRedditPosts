@@ -52,7 +52,8 @@ jobs:
     # Create a zip archive
     - name: Create Zip Archive
       run: |
-        zip deploy_package.zip python-scripts/reddit-posts-updater/package
+        cd python-scripts/reddit-posts-updater/package
+        zip -r ../../deploy_package.zip .
       shell: bash
 
     - name: Unzip Zip Archive
