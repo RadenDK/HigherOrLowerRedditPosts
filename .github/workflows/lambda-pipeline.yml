@@ -36,6 +36,9 @@ jobs:
         python package_builder.py
       shell: bash
 
+    - name: Print contents of the generated ZIP file
+      run: unzip -l python-scripts/reddit-posts-updater/lambda_build/deploy_package.zip
+
 
     # Deploy to Lambda using AWS CLI
     - name: Deploy to Lambda
