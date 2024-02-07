@@ -1,0 +1,42 @@
+.start-menu-background {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-menu-background::before {
+  content: "";
+  background-image: url("../images/background.jpg");
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+}
+
+h1 {
+  position: relative;
+  color: black;
+}
+
+.start-menu-content {
+  height: 100%;
+  padding-top: 5%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-container {
+  padding-top: 30px;
+}
+
+.btn-lg {
+  font-size: 30px;
+}
