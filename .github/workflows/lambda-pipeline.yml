@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    #paths:
-    #  - 'python-scripts/**'
+    paths:
+      - 'python-scripts/**'
 
 jobs:
   build-and-deploy:
