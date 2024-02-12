@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../components/Card";
+import Card from "../components/CardComponent";
+import AnswerAnimation from "../components/AnswerAnimationComponent";
+
 import "../styles/GamePageStyle.css";
 
 function GamePage() {
+  const answerAnimationRef = useRef();
   const navigate = useNavigate();
 
   const [leftCard, setLeftCard] = useState({ topic: "", score: 0 });
@@ -11,68 +14,68 @@ function GamePage() {
 
   useEffect(() => {
     initializeCards();
-  }, []); // Run once when the component mounts
+  }, []);
 
-  function handleHigherCardButtonClick() {
-    console.log("Higher Button clicked!");
-    console.log(
-      "Left card: " + leftCard.score + " right card: " + rightCard.score
-    );
+  function handleCardButtonClick(isHigher) {
+    if (
+      (isHigher && rightCard.score >= leftCard.score) ||
+      (!isHigher && rightCard.score <= leftCard.score)
+    ) {
+      revealRightCardScore(rightCard);
 
-    if (rightCard.score >= leftCard.score) {
-      console.log("You were right");
-      swapCards();
+      answerAnimationRef.current.startAnimation(true);
+
+      setTimeout(() => {
+        swapCards();
+      }, 3000);
     } else {
-      console.log("Wrong");
-      redirectToGameOver();
-    }
-  }
-
-  function handleLowerCardButtonClick() {
-    console.log("Lower Button clicked!");
-    console.log(
-      "Left card: " + leftCard.score + " right card: " + rightCard.score
-    );
-
-    if (rightCard.score <= leftCard.score) {
-      console.log("You were right");
-      swapCards();
-    } else {
-      console.log("Wrong");
-      redirectToGameOver();
+      answerAnimationRef.current.startAnimation(false);
+      setTimeout(() => {
+        redirectToGameOver();
+      }, 3000);
     }
   }
 
   const swapCards = () => {
-    rightCard.showButtons = false;
-    setLeftCard(rightCard);
+    setLeftCard(getRevealedRightCard(rightCard));
     setRightCard(randomizeCard(true));
+  };
+
+  const revealRightCardScore = (prevRightCard) => {
+    setRightCard({
+      ...prevRightCard,
+      showButtons: false,
+      revealScore: true,
+    });
+  };
+
+  const getRevealedRightCard = (prevRightCard) => {
+    return {
+      ...prevRightCard,
+      showButtons: false,
+      revealScore: false,
+    };
   };
 
   const redirectToGameOver = () => {
     navigate("/GameOverPage");
   };
 
-  const randomizeCard = (showButtons) => {
+  const initializeCards = () => {
+    setLeftCard(randomizeCard(false, false));
+    setRightCard(randomizeCard(true, false));
+  };
+
+  const randomizeCard = (showButtons, revealScore) => {
     const randNum = Math.floor(Math.random() * 100);
 
-    const cardData = {
+    return {
       topic: randNum,
       score: randNum,
       showButtons: showButtons,
-      onHigherClick: handleHigherCardButtonClick,
-      onLowerClick: handleLowerCardButtonClick,
+      revealScore: revealScore,
+      onClickFunction: handleCardButtonClick,
     };
-    return cardData;
-  };
-
-  const initializeCards = () => {
-    const leftCardData = randomizeCard();
-
-    const rightCardData = randomizeCard(true);
-
-    setLeftCard(leftCardData);
-    setRightCard(rightCardData);
   };
 
   return (
@@ -83,15 +86,17 @@ function GamePage() {
             topic={leftCard.topic}
             score={leftCard.score}
             showButtons={leftCard.showButtons}
+            revealScore={leftCard.revealScore}
           />
 
           <Card
             topic={rightCard.topic}
             score={rightCard.score}
             showButtons={rightCard.showButtons}
-            onHigherClick={handleHigherCardButtonClick}
-            onLowerClick={handleLowerCardButtonClick}
+            revealScore={rightCard.revealScore}
+            onClickFunction={handleCardButtonClick}
           />
+          <AnswerAnimation ref={answerAnimationRef} />
         </div>
       </div>
     </>

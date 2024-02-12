@@ -1,29 +1,44 @@
 .game-page-background {
-    height: 100vh;
-    width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
 }
 
 .card-container {
-    height: 100%;
-    width: 100%;
-    background-color: red;
-    display: flex;
+  height: 100%;
+  position: relative;
+
+  width: 100%;
+  background-color: black;
+  display: flex;
 }
 
 .card {
-    flex: 1;
-    background-color: blue;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background: linear-gradient(to top, #333333, #ff5f25);
+  border-radius: 20px; /* Optional: add rounded corners to the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Optional: add a subtle shadow */
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #001f3f;
+  }
+  100% {
+    background-color: #ff4136;
+  }
 }
 
 .card h1 {
-    padding: 20px;
-    font-size: 40px;
+  padding: 20px;
+  font-size: 40px;
 }
 
 .higher-or-lower-buttons {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }

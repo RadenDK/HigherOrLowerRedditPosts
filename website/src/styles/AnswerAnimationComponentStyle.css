@@ -1,0 +1,49 @@
+/* AnimationComponent.css */
+.answer-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 150px;
+  width: 150px;
+  border-radius: 15%;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+.answer-animation-intro {
+  animation-name: appear;
+}
+
+.answer-animation-outro {
+  animation-name: disappear;
+}
+
+.correct {
+  background-color: #32cd32;
+}
+
+.wrong {
+  background-color: #80180a;
+}
+
+@keyframes appear {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    background-color: white;
+    border-radius: 100%;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes disappear {
+  100% {
+    opacity: 0%;
+    transform: translateY(250%) translate(-50%, -50%);
+  }
+}
