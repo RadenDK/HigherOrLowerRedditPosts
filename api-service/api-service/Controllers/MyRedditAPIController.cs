@@ -1,33 +1,62 @@
 using Microsoft.AspNetCore.Mvc;
 
+using Amazon;
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
+using Amazon.DynamoDBv2.Model;
+using Amazon.Runtime;
+using System.Xml.Linq;
+
+
+
+using System.Text.Json;
+
+
 namespace api_service.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class HelloWorldController : ControllerBase
+	public class MyRedditAPIController : ControllerBase
 	{
-		private static readonly string[] Summaries = new[]
+
+		const string TableName = "topRedditPosts";
+
+		[HttpGet("GetAllPosts")]
+		public async Task<IActionResult> GetAllPosts()
 		{
-			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-		};
+			string response = await GetAllDatabaseItemsAsJsonAsync();
+			return Ok(response); 
+		}
+		private async Task<string> GetAllDatabaseItemsAsJsonAsync()
+		{
+			
+			Table table = GetDatabaseTable();
+
+			List<Document> databaseItems = await table.Scan(new ScanFilter()).GetRemainingAsync();
+
+			string databaseItemsAsJson = databaseItems.ToJson();
 
 
-		[HttpGet("GetTheWeather")]
-		public IEnumerable<WeatherForecast> Get()
-		{
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-			{
-				Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-				TemperatureC = Random.Shared.Next(-20, 55),
-				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-			})
-			.ToArray();
+			return databaseItemsAsJson;
 		}
 
-		[HttpGet("HelloWorld")]
-		public string GetHelloWorld()
+
+		private AmazonDynamoDBClient GetAWSClient()
 		{
-			return "Hello World!";
+			BasicAWSCredentials credentials = new BasicAWSCredentials(AwsKeys.AWS_ACCESS_KEY_ID, AwsKeys.AWS_SECRET_ACCESS_KEY);
+			AmazonDynamoDBClient client = new AmazonDynamoDBClient(credentials, AwsKeys.AWS_REGION);
+
+			return client;
 		}
+
+		private Table GetDatabaseTable()
+		{
+			AmazonDynamoDBClient client = GetAWSClient();
+			Table table = Table.LoadTable(client, TableName);
+
+			return table;
+		}
+
 	}
 }
