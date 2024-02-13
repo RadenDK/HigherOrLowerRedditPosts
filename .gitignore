@@ -36,3 +36,7 @@ api-service/api-service/Properties/
 appsettings*.json
 
 api-service/api-service/AwsKeys.cs
+python-scripts/reddit-posts-updater/.env
+
+python-scripts/reddit-posts-updater/__pycache__/
+
