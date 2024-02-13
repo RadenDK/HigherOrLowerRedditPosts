@@ -1,10 +1,8 @@
-
-
+#Python stuff
 python-scripts/.idea
 python-scripts/reddit-posts-updater/.idea
 
 python-scripts/reddit-posts-updater/lambda_build/
-
 
 # dependencies
 website/node_modules
@@ -29,3 +27,12 @@ website/yarn-debug.log*
 website/yarn-error.log*
 
 
+#.net API code
+api-service/.vs/
+api-service/api-service/bin/
+api-service/api-service/obj/
+api-service/api-service/Properties/
+*.user
+appsettings*.json
+
+api-service/api-service/AwsKeys.cs
