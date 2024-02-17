@@ -1,0 +1,43 @@
+.card {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  flex: 1; /* Allow the card to grow to fill available space */
+  min-width: 50%; /* Set a maximum width for each card */
+
+  background: linear-gradient(to top, #333333, #ff5f25);
+  border-radius: 20px; /* Optional: add rounded corners to the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Optional: add a subtle shadow */
+}
+
+.card h1 {
+  color: white;
+  padding: 20px;
+  font-size: 40px;
+}
+
+.card p {
+  color: white;
+}
+
+.card span {
+  color: white;
+}
+
+.higher-or-lower-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-in {
+  animation: slideToLeft 1.5s ease-out;
+}
+@keyframes slideToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

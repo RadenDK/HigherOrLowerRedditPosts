@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
 import CountingAnimation from "./CountingAnimationComponent";
+import "../styles/CardStyle.css";
 
 const Card = (props) => {
   const { topic, score, showButtons, revealScore, onClickFunction } = props;
 
-  useEffect(() => {
-  });
-
   return (
-    <div className="card">
+    <div className="card testanimation">
       <h1>{topic}</h1>
       <p>has a reddit</p>
       {showButtons ? (

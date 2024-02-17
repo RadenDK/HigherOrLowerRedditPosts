@@ -1,82 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useEffect } from "react";
 import Card from "../components/CardComponent";
 import AnswerAnimation from "../components/AnswerAnimationComponent";
+import { useCards } from "../components/UseCardHook";
 
 import "../styles/GamePageStyle.css";
 
 function GamePage() {
   const answerAnimationRef = useRef();
-  const navigate = useNavigate();
 
-  const [leftCard, setLeftCard] = useState({ topic: "", score: 0 });
-  const [rightCard, setRightCard] = useState({ topic: "", score: 0 });
+  const {
+    leftCard,
+    rightCard,
+    nextCard,
+    initializeCards,
+    handleCardButtonClick,
+  } = useCards(answerAnimationRef);
 
   useEffect(() => {
     initializeCards();
   }, []);
-
-  function handleCardButtonClick(isHigher) {
-    if (
-      (isHigher && rightCard.score >= leftCard.score) ||
-      (!isHigher && rightCard.score <= leftCard.score)
-    ) {
-      revealRightCardScore(rightCard);
-
-      answerAnimationRef.current.startAnimation(true);
-
-      setTimeout(() => {
-        swapCards();
-      }, 3000);
-    } else {
-      answerAnimationRef.current.startAnimation(false);
-      setTimeout(() => {
-        redirectToGameOver();
-      }, 3000);
-    }
-  }
-
-  const swapCards = () => {
-    setLeftCard(getRevealedRightCard(rightCard));
-    setRightCard(randomizeCard(true));
-  };
-
-  const revealRightCardScore = (prevRightCard) => {
-    setRightCard({
-      ...prevRightCard,
-      showButtons: false,
-      revealScore: true,
-    });
-  };
-
-  const getRevealedRightCard = (prevRightCard) => {
-    return {
-      ...prevRightCard,
-      showButtons: false,
-      revealScore: false,
-    };
-  };
-
-  const redirectToGameOver = () => {
-    navigate("/GameOverPage");
-  };
-
-  const initializeCards = () => {
-    setLeftCard(randomizeCard(false, false));
-    setRightCard(randomizeCard(true, false));
-  };
-
-  const randomizeCard = (showButtons, revealScore) => {
-    const randNum = Math.floor(Math.random() * 100);
-
-    return {
-      topic: randNum,
-      score: randNum,
-      showButtons: showButtons,
-      revealScore: revealScore,
-      onClickFunction: handleCardButtonClick,
-    };
-  };
 
   return (
     <>
@@ -96,6 +38,14 @@ function GamePage() {
             revealScore={rightCard.revealScore}
             onClickFunction={handleCardButtonClick}
           />
+
+          <Card
+            topic={nextCard.topic}
+            score={nextCard.score}
+            showButtons={nextCard.showButtons}
+            revealScore={nextCard.revealScore}
+          />
+
           <AnswerAnimation ref={answerAnimationRef} />
         </div>
       </div>
