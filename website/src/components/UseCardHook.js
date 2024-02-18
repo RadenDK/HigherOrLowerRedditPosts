@@ -5,40 +5,69 @@ export function useCards(answerAnimationRef) {
   const [leftCard, setLeftCard] = useState({ topic: "", score: 0 });
   const [rightCard, setRightCard] = useState({ topic: "", score: 0 });
   const [nextCard, setNextCard] = useState({ topic: "", score: 0 });
+  const [score, setScore] = useState(0);
+
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const navigate = useNavigate();
 
+  const DELAY_CORRECT_ANSWER = 2000;
+  const DELAY_UPDATE_SCORE = 2000;
+  const DELAY_SWAP_CARDS = 500;
+  const DELAY_WRONG_ANSWER = 2000;
+  const DELAY_GAME_OVER = 2500;
+
   function handleCardButtonClick(isHigher) {
+    revealRightCardScore(rightCard);
+
     if (
       (isHigher && rightCard.score >= leftCard.score) ||
       (!isHigher && rightCard.score <= leftCard.score)
     ) {
-      revealRightCardScore(rightCard);
-
-      setTimeout(() => {
-        answerAnimationRef.current.startAnimation(true);
-      }, 2000);
-
-      setTimeout(() => {
-        swapCards();
-      }, 4500);
+      handleCorrectAnswer();
     } else {
-      answerAnimationRef.current.startAnimation(false);
-      setTimeout(() => {
-        redirectToGameOver();
-      }, 3000);
+      handleWrongAnswer();
+    }
+  }
+
+  async function handleCorrectAnswer() {
+    await delay(DELAY_CORRECT_ANSWER);
+    answerAnimationRef.current.startAnimation(true);
+
+    await delay(DELAY_UPDATE_SCORE);
+    updateScore();
+
+    await delay(DELAY_SWAP_CARDS);
+    swapCards();
+  }
+
+  async function handleWrongAnswer() {
+    await delay(DELAY_WRONG_ANSWER);
+    answerAnimationRef.current.startAnimation(false);
+
+    await delay(DELAY_GAME_OVER);
+    redirectToGameOver();
+  }
+
+  function updateScore() {
+    setScore((prevScore) => prevScore + 1);
+
+    const scoreComponent = document.getElementsByClassName("score")[0];
+
+    if (scoreComponent) {
+      scoreComponent.classList.add("score-pop");
+      scoreComponent.addEventListener("animationend", () => {
+        scoreComponent.classList.remove("score-pop");
+      });
     }
   }
 
   const swapCards = () => {
     const allCards = document.querySelectorAll(".card");
 
-    // Loop over all cards and add the slide-in class to start the animation
-
     allCards.forEach((card) => {
       card.classList.add("slide-in");
 
-      // Remove the slide-in class when the animation is finished
       card.addEventListener("animationend", () => {
         card.classList.remove("slide-in");
       });
@@ -68,7 +97,7 @@ export function useCards(answerAnimationRef) {
   };
 
   const redirectToGameOver = () => {
-    navigate("/GameOverPage");
+    navigate("/GameOverPage", { state: { score: score } });
   };
 
   const initializeCards = () => {
@@ -93,6 +122,7 @@ export function useCards(answerAnimationRef) {
     leftCard,
     rightCard,
     nextCard,
+    score,
     swapCards,
     revealRightCardScore,
     getRevealedRightCard,
