@@ -1,0 +1,39 @@
+/* GameOverPage.css */
+
+.game-over-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-image: url("../images/game-over-background.jpg");
+  background-size: cover;
+}
+
+.game-over-page h1 {
+  color: white;
+  font-size: 70px;
+  margin-bottom: 30px;
+}
+
+.game-over-page p {
+  color: white;
+  font-size: 50px;
+
+  margin-bottom: 10px;
+}
+
+.game-over-page button {
+  margin-top: 40px;
+  padding: 10px 20px;
+  font-size: 30px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.game-over-page button:hover {
+  background-color: #0056b3;
+}
