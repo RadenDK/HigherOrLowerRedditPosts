@@ -9,7 +9,7 @@
 
 .start-menu-background::before {
   content: "";
-  background-image: url("../images/background.jpg");
+  background-image: url("../images/front-page-background.jpg");
   background-size: cover;
   position: absolute;
   top: 0px;
