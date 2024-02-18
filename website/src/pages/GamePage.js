@@ -4,6 +4,7 @@ import AnswerAnimation from "../components/AnswerAnimationComponent";
 import { useCards } from "../components/UseCardHook";
 
 import "../styles/GamePageStyle.css";
+import Score from "../components/ScoreComponent";
 
 function GamePage() {
   const answerAnimationRef = useRef();
@@ -12,6 +13,7 @@ function GamePage() {
     leftCard,
     rightCard,
     nextCard,
+    score,
     initializeCards,
     handleCardButtonClick,
   } = useCards(answerAnimationRef);
@@ -47,7 +49,11 @@ function GamePage() {
           />
 
           <AnswerAnimation ref={answerAnimationRef} />
+
         </div>
+        <Score 
+        score ={score}/>
+
       </div>
     </>
   );

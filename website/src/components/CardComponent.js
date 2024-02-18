@@ -5,7 +5,7 @@ const Card = (props) => {
   const { topic, score, showButtons, revealScore, onClickFunction } = props;
 
   return (
-    <div className="card testanimation">
+    <div className="card">
       <h1>{topic}</h1>
       <p>has a reddit</p>
       {showButtons ? (
