@@ -19,15 +19,23 @@
 
 .card p {
   color: white;
+  font-size: 30px;
 }
 
 .card span {
   color: white;
+  font-size: 40px;
+
+}
+
+ .higher-or-lower-buttons .btn {
+  font-size: 35px;
 }
 
 .higher-or-lower-buttons {
   display: flex;
   flex-direction: column;
+  
 }
 
 .slide-in {
