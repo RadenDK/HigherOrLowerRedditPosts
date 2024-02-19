@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function useCards(answerAnimationRef) {
@@ -6,6 +6,7 @@ export function useCards(answerAnimationRef) {
   const [rightCard, setRightCard] = useState({ topic: "", score: 0 });
   const [nextCard, setNextCard] = useState({ topic: "", score: 0 });
   const [score, setScore] = useState(0);
+  const [posts, setPosts] = useState([]);
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -16,6 +17,51 @@ export function useCards(answerAnimationRef) {
   const DELAY_SWAP_CARDS = 500;
   const DELAY_WRONG_ANSWER = 2000;
   const DELAY_GAME_OVER = 2500;
+
+  useEffect(() => {
+    console.log("Fetching data");
+    const fetchData = async () => {
+      await fetchPostsFromApi();
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log("Initializing cards");
+    if (posts.length > 0) {
+      initializeCards();
+    }
+  }, [posts]);
+
+  async function fetchPostsFromApi() {
+    try {
+      const response = await fetch("/MyRedditAPI/GetAllPosts");
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  function initializeCards() {
+    setLeftCard(randomizeCard(false, false));
+    setRightCard(randomizeCard(true, false));
+    setNextCard(randomizeCard(true, false));
+  }
+
+  const randomizeCard = (showButtons, revealScore) => {
+    const randNum = Math.floor(Math.random() * posts.length);
+
+    console.log(posts);
+
+    return {
+      topic: posts[randNum].title,
+      score: posts[randNum].score,
+      showButtons: showButtons,
+      revealScore: revealScore,
+      onClickFunction: handleCardButtonClick,
+    };
+  };
 
   function handleCardButtonClick(isHigher) {
     revealRightCardScore(rightCard);
@@ -98,24 +144,6 @@ export function useCards(answerAnimationRef) {
 
   const redirectToGameOver = () => {
     navigate("/GameOverPage", { state: { score: score } });
-  };
-
-  const initializeCards = () => {
-    setLeftCard(randomizeCard(false, false));
-    setRightCard(randomizeCard(true, false));
-    setNextCard(randomizeCard(true, false));
-  };
-
-  const randomizeCard = (showButtons, revealScore) => {
-    const randNum = Math.floor(Math.random() * 100);
-
-    return {
-      topic: randNum,
-      score: randNum,
-      showButtons: showButtons,
-      revealScore: revealScore,
-      onClickFunction: handleCardButtonClick,
-    };
   };
 
   return {
