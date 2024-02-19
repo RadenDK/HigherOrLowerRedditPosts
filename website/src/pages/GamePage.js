@@ -18,10 +18,6 @@ function GamePage() {
     handleCardButtonClick,
   } = useCards(answerAnimationRef);
 
-  useEffect(() => {
-    initializeCards();
-  }, []);
-
   return (
     <>
       <div className="game-page-background">
@@ -49,11 +45,8 @@ function GamePage() {
           />
 
           <AnswerAnimation ref={answerAnimationRef} />
-
         </div>
-        <Score 
-        score ={score}/>
-
+        <Score score={score} />
       </div>
     </>
   );
