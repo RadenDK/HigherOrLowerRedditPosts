@@ -4,6 +4,10 @@ from decimal import Decimal
 import boto3
 import praw
 
+
+AMOUNT_OF_POSTS = 10
+
+
 def lambda_handler(event, context):
     reddit_accessor = RedditAccessor()
 
@@ -32,7 +36,7 @@ class RedditAccessor():
     def retrieve_todays_reddit_posts(self):
         todays_reddit_posts = []
 
-        for submission in self.reddit.subreddit("AmItheAsshole").top(time_filter="day", limit=10):
+        for submission in self.reddit.subreddit("AmItheAsshole").top(time_filter="day", limit=AMOUNT_OF_POSTS):
             redditpost = {
                 "title": submission.title,
                 "user": submission.author.name,
