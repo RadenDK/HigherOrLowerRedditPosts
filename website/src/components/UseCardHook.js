@@ -35,7 +35,6 @@ export function useCards(answerAnimationRef) {
 
   async function fetchPostsFromApi() {
     try {
-      // https://higher-or-lower-reddit-api-eaf2fda55c83.herokuapp.com/MyRedditAPI/GetAllPosts
       const response = await fetch("https://higher-or-lower-reddit-api-eaf2fda55c83.herokuapp.com/MyRedditAPI/GetAllPosts");
       const data = await response.json();
       setPosts(data);
