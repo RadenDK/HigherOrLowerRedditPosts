@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import Card from "../components/CardComponent";
 import AnswerAnimation from "../components/AnswerAnimationComponent";
 import { useCards } from "../components/UseCardHook";
@@ -14,7 +14,6 @@ function GamePage() {
     rightCard,
     nextCard,
     score,
-    initializeCards,
     handleCardButtonClick,
   } = useCards(answerAnimationRef);
 
