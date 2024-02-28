@@ -17,13 +17,10 @@ jobs:
 
     # CI part
 
-    - name: Run ESLint
-      run: npx eslint . --quiet
-      working-directory: website
-
     - name: Build React app
       run: |
         npm install
+        npx eslint . --quiet
         npm run build
       shell: bash
       working-directory: website
