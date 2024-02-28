@@ -8,33 +8,40 @@ on:
       - 'website/**'
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-        # CD part
-        - name: Build React app
-          run: |
-            cd website
-            npm install
-            npm run build
-          shell: bash
+    # CI part
 
-        - name: Install and configure AWS CLI
-          run: |
-            sudo apt-get install -y awscli
-            aws configure set aws_access_key_id ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
-            aws configure set aws_secret_access_key ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
-            aws configure set region ${{ secrets.AWS_REGION }}
-          if: success()
-          shell: bash
+    - name: Run ESLint
+      run: npx eslint . --quiet
+      working-directory: website
 
-        - name: Deploy to S3
-          run: |
-            cd build
-            aws s3 rm s3://higher-or-lower-clone --recursive
-            aws s3 sync . s3://higher-or-lower-clone
-              
+    - name: Build React app
+      run: |
+        npm install
+        npm run build
+      shell: bash
+      working-directory: website
+
+    # CD part
+
+    - name: Install and configure AWS CLI
+      run: |
+        sudo apt-get install -y awscli
+        aws configure set aws_access_key_id ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+        aws configure set region ${{ secrets.AWS_REGION }}
+      if: success()
+      shell: bash
+
+    - name: Deploy to S3
+      run: |
+        cd build
+        aws s3 rm s3://higher-or-lower-clone --recursive
+        aws s3 sync . s3://higher-or-lower-clone
+      working-directory: website
