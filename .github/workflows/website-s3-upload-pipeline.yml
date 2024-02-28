@@ -1,0 +1,40 @@
+name: Deploy Website build to AWS S3
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'website/**'
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        # CD part
+        - name: Build React app
+          run: |
+            cd website
+            npm install
+            npm run build
+          shell: bash
+
+        - name: Install and configure AWS CLI
+          run: |
+            sudo apt-get install -y awscli
+            aws configure set aws_access_key_id ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+            aws configure set aws_secret_access_key ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+            aws configure set region ${{ secrets.AWS_REGION }}
+          if: success()
+          shell: bash
+
+        - name: Deploy to S3
+          run: |
+            cd build
+            aws s3 rm s3://higher-or-lower-clone --recursive
+            aws s3 sync . s3://higher-or-lower-clone
+              
