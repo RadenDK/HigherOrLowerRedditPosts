@@ -40,3 +40,4 @@ python-scripts/reddit-posts-updater/.env
 
 python-scripts/reddit-posts-updater/__pycache__/
 
+api-service/api-service/.env
