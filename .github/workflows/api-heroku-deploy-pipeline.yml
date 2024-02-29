@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'api-service/**'
+    #paths:
+    #  - 'api-service/**'
 
 jobs:
   deploy:
@@ -15,25 +15,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Heroku
-      run: curl https://cli-assets.heroku.com/install.sh | sh
-
-    - name: Login to Heroku
-      run: heroku login --api-key $HEROKU_API_KEY
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-
-    - name: Login to Heroku Container registry
-      uses: docker/login-action@v1
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.13.15
       with:
-        registry: registry.heroku.com
-        username: _ 
-        password: ${{ secrets.HEROKU_API_KEY }}
-
-    - name: Build and push Docker image
-      run: heroku container:push web -a higher-or-lower-reddit-api
-      working-directory: api-service
- 
-    - name: Release image
-      run: heroku container:release web -a higher-or-lower-reddit-api
-      
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: higher-or-lower-reddit-api
+        heroku_email: rasmusjensen.dev@gmail.com
+        appdir: api-service
+        usedocker: true
