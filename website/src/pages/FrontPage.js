@@ -7,7 +7,6 @@ function FrontPage({ startGame }) {
     <div className="start-menu-background">
       <div className="start-menu-content">
         <h1>Higher or Lower Reddit AMITA </h1>
-        <h1> TEST </h1>
         <div className="button-container">
           <Link to="./GamePage" className="start-game-button btn btn-info btn-lg">
             Start Playing
