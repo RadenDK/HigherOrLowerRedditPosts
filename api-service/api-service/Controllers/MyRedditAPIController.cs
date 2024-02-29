@@ -25,12 +25,9 @@ namespace api_service.Controllers
         [HttpGet("GetAllPosts")]
         public async Task<IActionResult> GetAllPosts()
         {
-            //string response = await GetAllDatabaseItemsAsJsonAsync();
-            
-            
-            return Ok("Hello world");
+            string response = await GetAllDatabaseItemsAsJsonAsync();
 
-            // return Ok(response);
+            return Ok(response);
         }
         private async Task<string> GetAllDatabaseItemsAsJsonAsync()
         {
