@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-
+using DotNetEnv;
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
@@ -15,48 +15,63 @@ using System.Text.Json;
 
 namespace api_service.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	public class MyRedditAPIController : ControllerBase
-	{
+    [ApiController]
+    [Route("[controller]")]
+    public class MyRedditAPIController : ControllerBase
+    {
 
-		const string TableName = "topRedditPosts";
+        const string TableName = "topRedditPosts";
 
-		[HttpGet("GetAllPosts")]
-		public async Task<IActionResult> GetAllPosts()
-		{
-			string response = await GetAllDatabaseItemsAsJsonAsync();
-			return Ok(response); 
-		}
-		private async Task<string> GetAllDatabaseItemsAsJsonAsync()
-		{
-			
-			Table table = GetDatabaseTable();
+        [HttpGet("GetAllPosts")]
+        public async Task<IActionResult> GetAllPosts()
+        {
+            //string response = await GetAllDatabaseItemsAsJsonAsync();
+            
+            
+            return Ok("Hello world");
 
-			List<Document> databaseItems = await table.Scan(new ScanFilter()).GetRemainingAsync();
+            // return Ok(response);
+        }
+        private async Task<string> GetAllDatabaseItemsAsJsonAsync()
+        {
 
-			string databaseItemsAsJson = databaseItems.ToJson();
+            Table table = GetDatabaseTable();
+
+            List<Document> databaseItems = await table.Scan(new ScanFilter()).GetRemainingAsync();
+
+            string databaseItemsAsJson = databaseItems.ToJson();
 
 
-			return databaseItemsAsJson;
-		}
+            return databaseItemsAsJson;
+        }
 
 
-		private AmazonDynamoDBClient GetAWSClient()
-		{
-			BasicAWSCredentials credentials = new BasicAWSCredentials(AwsKeys.AWS_ACCESS_KEY_ID, AwsKeys.AWS_SECRET_ACCESS_KEY);
-			AmazonDynamoDBClient client = new AmazonDynamoDBClient(credentials, AwsKeys.AWS_REGION);
+        private AmazonDynamoDBClient GetAWSClient()
+        {
 
-			return client;
-		}
+            Env.Load();
 
-		private Table GetDatabaseTable()
-		{
-			AmazonDynamoDBClient client = GetAWSClient();
-			Table table = Table.LoadTable(client, TableName);
 
-			return table;
-		}
+            string awsAccessKeyId = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
+            string awsSecretAccessKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
 
-	}
+
+
+            RegionEndpoint awsRegion = RegionEndpoint.EUNorth1;
+
+            BasicAWSCredentials credentials = new BasicAWSCredentials(awsAccessKeyId, awsSecretAccessKey);
+            AmazonDynamoDBClient client = new AmazonDynamoDBClient(credentials, awsRegion);
+
+            return client;
+        }
+
+        private Table GetDatabaseTable()
+        {
+            AmazonDynamoDBClient client = GetAWSClient();
+            Table table = Table.LoadTable(client, TableName);
+
+            return table;
+        }
+
+    }
 }
