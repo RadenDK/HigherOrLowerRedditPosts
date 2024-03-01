@@ -9,13 +9,8 @@ import Score from "../components/ScoreComponent";
 function GamePage() {
   const answerAnimationRef = useRef();
 
-  const {
-    leftCard,
-    rightCard,
-    nextCard,
-    score,
-    handleCardButtonClick,
-  } = useCards(answerAnimationRef);
+  const { leftCard, rightCard, nextCard, score, handleCardButtonClick } =
+    useCards(answerAnimationRef);
 
   return (
     <>
@@ -24,6 +19,8 @@ function GamePage() {
           <Card
             topic={leftCard.topic}
             score={leftCard.score}
+            user={leftCard.user}
+            created_utc={leftCard.created_utc}
             showButtons={leftCard.showButtons}
             revealScore={leftCard.revealScore}
           />
@@ -31,6 +28,8 @@ function GamePage() {
           <Card
             topic={rightCard.topic}
             score={rightCard.score}
+            user={rightCard.user}
+            created_utc={rightCard.created_utc}
             showButtons={rightCard.showButtons}
             revealScore={rightCard.revealScore}
             onClickFunction={handleCardButtonClick}
@@ -39,6 +38,8 @@ function GamePage() {
           <Card
             topic={nextCard.topic}
             score={nextCard.score}
+            user={nextCard.user}
+            created_utc={nextCard.created_utc}
             showButtons={nextCard.showButtons}
             revealScore={nextCard.revealScore}
           />
