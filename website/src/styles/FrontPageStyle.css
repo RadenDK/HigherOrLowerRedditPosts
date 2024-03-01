@@ -20,13 +20,25 @@
 }
 
 h1 {
+  font: 60px;
   position: relative;
-  color: black;
+  color: white;
+  padding-bottom: 30px;
+  font-size: 3.5em; /* Adjust the font size as needed */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Add text shadow for depth */
+  font-weight: bold;
 }
+
+h3 {
+  color: white;
+  font-size: 2em;
+
+}
+
 
 .start-menu-content {
   height: 100%;
-  padding-top: 5%;
+  padding-top: 1%;
   position: relative;
   display: flex;
   align-items: center;
@@ -38,5 +50,5 @@ h1 {
 }
 
 .btn-lg {
-  font-size: 30px;
+  font-size: 50px;
 }

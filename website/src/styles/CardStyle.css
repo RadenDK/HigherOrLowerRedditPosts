@@ -28,7 +28,7 @@
 
 }
 
- .higher-or-lower-buttons .btn {
+.higher-or-lower-buttons .btn {
   font-size: 35px;
 }
 
@@ -48,4 +48,19 @@
   to {
     transform: translateX(-100%);
   }
+}
+
+
+.made-by-and-when-container {
+  align-self: flex-start;
+  text-align: left;
+  font-size: 10px;
+  margin-bottom: auto;
+}
+
+.card-main-content-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: auto;
+  align-items: center;
 }

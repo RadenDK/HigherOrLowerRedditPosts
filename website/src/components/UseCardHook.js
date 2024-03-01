@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function useCards(answerAnimationRef) {
-  const [leftCard, setLeftCard] = useState({ topic: "", score: 0 });
-  const [rightCard, setRightCard] = useState({ topic: "", score: 0 });
-  const [nextCard, setNextCard] = useState({ topic: "", score: 0 });
+  const [leftCard, setLeftCard] = useState({ topic: "", score: 0, user:"", created_utc:"", showButtons: false, revealScore: false, onClickFunction: null});
+  const [rightCard, setRightCard] = useState({ topic: "", score: 0, user:"", created_utc:"", showButtons: false, revealScore: false, onClickFunction: null});
+  const [nextCard, setNextCard] = useState({ topic: "", score: 0, user:"", created_utc:"", showButtons: false, revealScore: false, onClickFunction: null});
   const [score, setScore] = useState(0);
   const [posts, setPosts] = useState([]);
 
@@ -19,7 +19,6 @@ export function useCards(answerAnimationRef) {
   const DELAY_GAME_OVER = 2500;
 
   useEffect(() => {
-    console.log("Fetching data");
     const fetchData = async () => {
       await fetchPostsFromApi();
     };
@@ -27,7 +26,6 @@ export function useCards(answerAnimationRef) {
   }, []);
 
   useEffect(() => {
-    console.log("Initializing cards");
     if (posts.length > 0) {
       initializeCards();
     }
@@ -35,7 +33,9 @@ export function useCards(answerAnimationRef) {
 
   async function fetchPostsFromApi() {
     try {
-      const response = await fetch("https://higher-or-lower-reddit-api-eaf2fda55c83.herokuapp.com/MyRedditAPI/GetAllPosts");
+      const response = await fetch(
+        "https://higher-or-lower-reddit-api-eaf2fda55c83.herokuapp.com/MyRedditAPI/GetAllPosts"
+      );
       const data = await response.json();
       setPosts(data);
     } catch (error) {
@@ -52,11 +52,11 @@ export function useCards(answerAnimationRef) {
   const randomizeCard = (showButtons, revealScore) => {
     const randNum = Math.floor(Math.random() * posts.length);
 
-    console.log(posts);
-
     return {
       topic: posts[randNum].title,
       score: posts[randNum].score,
+      user: posts[randNum].user,
+      created_utc: posts[randNum].created_utc,
       showButtons: showButtons,
       revealScore: revealScore,
       onClickFunction: handleCardButtonClick,
